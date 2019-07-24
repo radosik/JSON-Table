@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Table1</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body onload="inputs()">
+  <div id='div'>
+    <button onclick="colAdd()">Col Add</button>
+  </div>
+
+
+  <div id="row">
+    <button onclick="rowAdd()">Row Add</button>
+  </div>
+
+  <script>
+    class Table {
+      constructor() {
+        this.name = 'Name';
+        this.age = 'Age';
+        this.city = 'City';
+      }
+    }
+    let col =
+      '{"head": {"name":"Name", "age":"Age", "city":"City"}}';
+    let myObj = JSON.parse(col);
+
+    let table = document.createElement('table');
+    let tbody = document.createElement('tbody');
+    let thead = document.createElement('thead');
+    let input2 = document.createElement('input');
+    let div = document.getElementById('div');
+    let isHead = false;
+    div.appendChild(table);
+    table.appendChild(thead);
+    table.appendChild(tbody);
+
+    function inputs() {
+      let div = document.getElementById('row');
+      input2.placeholder = 'Add some col';
+      let l = document.querySelectorAll('th').length;
+      for (let i = 1; i < l + 1; i++) {
+        let input = document.createElement('input');
+        div.appendChild(input);
+        input.name = i;
+        input.placeholder = 'Add some row number' + ' ' + i;
+      }
+      div.appendChild(input2);
+    }
+
+
+    for (let value in myObj) {
+      let tr = document.createElement('tr');
+      tr.id = 'tr';
+      if (value == "head") {
+        thead.appendChild(tr);
+        isHead = true;
+      } else {
+        tbody.appendChild(tr);
+        isHead = false;
+      }
+      let row = myObj[value];
+      for (let value in row) {
+        let td;
+        if (isHead) {
+          td = document.createElement('th');
+        } else {
+          td = document.createElement('td');
+
+        }
+        tr.appendChild(td);
+        td.innerHTML = row[value];
+      }
+    }
+
+    function rowAdd() {
+      l = document.querySelectorAll('td').length;
+      for (let i = 0; i < l; i++) {
+        let input = document.getElementsByName(i);
+        let row01 = td.insertRow(i);
+        row01.innerHTML = input.value;
+        let cell1 = row01.insertCell(i);
+        let cell2 = row01.insertCell(i);
+        let cell3 = row01.insertCell(i);
+      }
+    }
+
+
+    function colAdd() {
+      let row = tbody.insertRow(-1);
+      let col = row.insertCell(-1);
+
+      col.innerHTML = input2.value;
+    }
+
+  </script>
+
+</body>
+
+</html>
